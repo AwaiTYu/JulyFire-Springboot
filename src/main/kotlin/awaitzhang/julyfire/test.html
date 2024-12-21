@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传示例</title>
+</head>
+<body>
+<h2>文件上传示例</h2>
+
+<!-- 文件选择按钮 -->
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">上传文件</button>
+
+<script>
+    // 文件上传函数
+    async function uploadFile() {
+        // 获取用户选择的文件
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("请先选择文件！");
+            return;
+        }
+
+        // 创建一个 FormData 对象，用于存储文件数据
+        const formData = new FormData();
+        formData.append('file', file); // 'file' 是表单字段的名称
+
+        try {
+            // 使用 fetch 发送 POST 请求
+            const response = await fetch('http://127.0.0.1:8080/uploadFile', { // 将 URL 替换为你的服务器地址
+                method: 'POST',
+                body: formData
+            });
+
+            // 检查响应状态
+            if (response.ok) {
+                const result = await response.json();
+                alert('文件上传成功！');
+                console.log('服务器响应:', result);
+            } else {
+                alert('文件上传失败！');
+            }
+        } catch (error) {
+            console.error('请求失败:', error);
+            alert('上传过程中出现错误！' + error);
+        }
+    }
+</script>
+</body>
+</html>
