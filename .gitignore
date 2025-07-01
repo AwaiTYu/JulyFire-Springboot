@@ -38,3 +38,7 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+
+### log日志 ###
+*.log

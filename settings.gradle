@@ -1,1 +1,6 @@
 rootProject.name = 'JulyFire'
+
+include 'common'
+include 'user'
+//include 'weibo'
+include 'application'
