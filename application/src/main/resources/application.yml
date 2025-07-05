@@ -28,3 +28,32 @@ spring:
         enabled: true
         url-pattern: /*
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+  #redis连接
+  data:
+    redis:
+      host: 192.168.137.11
+      port: 6379          # Redis 端口
+      password:           # 密码（如有）
+      database: 0         # 数据库索引
+      lettuce:
+        pool:
+          max-active: 8   # 最大连接数
+          max-idle: 8     # 最大空闲连接
+          min-idle: 0     # 最小空闲连接
+          max-wait: -1ms  # 最大阻塞等待时间
+      timeout: 5000ms     # 连接超时时间
+
+  #邮箱服务
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 1716314512@qq.com
+    password: mrixclmyrdaobdgj   # 这里填写刚刚获取的授权码
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true

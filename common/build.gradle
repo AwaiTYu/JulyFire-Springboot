@@ -33,6 +33,18 @@ dependencies {
     api 'com.baomidou:mybatis-plus:3.5.7'
     api 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7'
     api 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //邮件服务
+    api 'org.springframework.boot:spring-boot-starter-mail'
+    //redis
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
+    //kotlin
+
+
+     // 添加协程 Reactor 支持（用于响应式编程）
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1'
+
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

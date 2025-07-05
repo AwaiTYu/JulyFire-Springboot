@@ -13,4 +13,6 @@ interface UsersService : IService<Users> {
     fun encodePassword(password: String): String
     fun generateRandomNickname(): String
     fun isValidEmailFormat(email: String): Boolean
+    fun generateVerificationCode(): String
+    fun sendVerificationCodeAsync(email: String, code: String)
 }

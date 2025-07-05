@@ -5,7 +5,10 @@ import awaitzhang.user.mapper.UsersMapper
 import awaitzhang.user.service.UsersService
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
-//import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.mail.SimpleMailMessage
+import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.scheduling.annotation.Async
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import kotlin.random.Random
 
@@ -17,8 +20,13 @@ import kotlin.random.Random
 @Service
 class UsersServiceImpl : ServiceImpl<UsersMapper, Users>(), UsersService {
 
-//    @Autowired
-//    lateinit var passwordEncoder: PasswordEncoder
+    @Autowired
+    lateinit var passwordEncoder: PasswordEncoder
+
+    @Autowired
+    lateinit var mailSender: JavaMailSender
+
+    private val logger by lazy { org.slf4j.LoggerFactory.getLogger(this::class.java) }
 
     val nicknamePool = listOf(
         "星辰", "微光", "清风", "明月", "山海", "浮生", "墨染", "流年",
@@ -42,7 +50,7 @@ class UsersServiceImpl : ServiceImpl<UsersMapper, Users>(), UsersService {
     }
 
     override fun encodePassword(password: String): String {
-        return  password
+        return passwordEncoder.encode(password)
     }
 
     override fun generateRandomNickname(): String {
@@ -53,6 +61,35 @@ class UsersServiceImpl : ServiceImpl<UsersMapper, Users>(), UsersService {
 
     override fun isValidEmailFormat(email: String): Boolean {
         return emailRegex.matches(email)
+    }
+
+    // 生成6位随机数字验证码
+    override fun generateVerificationCode(): String {
+        return (100000..999999).random().toString()
+    }
+
+    // 发送邮箱验证码（实际邮件发送逻辑）
+     private fun sendVerificationCode(email: String, code: String) {
+        // 实际邮件发送实现（使用JavaMailSender）
+        val message = SimpleMailMessage().apply {
+            from = "1716314512@qq.com"
+            setTo(email)
+            subject = "七月流火验证码"
+            text = "您的验证码是: $code，该验证码5分钟内有效"
+        }
+        mailSender.send(message)
+    }
+
+
+    // 在UsersService中添加异步方法
+    @Async
+    override fun sendVerificationCodeAsync(email: String, code: String) {
+        try {
+            sendVerificationCode(email, code)
+        } catch (e: Exception) {
+            logger.error("邮件发送失败: ${e.message}", e)
+            // 可以添加重试逻辑或告警
+        }
     }
 }
 
