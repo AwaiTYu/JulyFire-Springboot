@@ -44,6 +44,11 @@ dependencies {
      // 添加协程 Reactor 支持（用于响应式编程）
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.1'
 
+    //JWT
+    api("io.jsonwebtoken:jjwt-api:0.11.5")
+    api("io.jsonwebtoken:jjwt-impl:0.11.5")
+    api("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'

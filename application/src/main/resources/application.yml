@@ -57,3 +57,8 @@ spring:
           auth: true
           ssl:
             enable: true
+  #JWT
+  jwt:
+    secret: lVAYjxljvqs/5UR+6zz2zxjWjicEAuyf6H7k8OX9xGE=
+    access-token-expiration: 900000 # 15分钟 (毫秒)
+    refresh-token-expiration: 604800000 # 7天 (毫秒)
